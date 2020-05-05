@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using AdvertAPI.Models;
 using Amazon.DynamoDBv2;
@@ -30,9 +31,30 @@ namespace AdvertAPI.Services
 			return dbModel.Id;
 		}
 
-		public Task<bool> Confirm(ConfirmAdvertModel model)
+		public async Task Confirm(ConfirmAdvertModel model)
 		{
-			throw new NotImplementedException();
+			using (var client = new AmazonDynamoDBClient())
+			{
+				using (var context = new DynamoDBContext(client))
+				{
+					var advertisement = await context.LoadAsync<AdvertDbModel>(model.Id);
+
+					if (advertisement == null)
+					{
+						throw new KeyNotFoundException($"An advertisement with ID={model.Id} was not found");
+					}
+
+					if (model.Status == AdvertStatus.Active)
+					{
+						advertisement.Status = AdvertStatus.Active;
+						await context.SaveAsync(advertisement);
+					}
+					else
+					{
+						await context.DeleteAsync(advertisement);
+					}
+				}
+			}
 		}
 	}
 }
