@@ -2,6 +2,12 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
+    <Authors>Amit Tyagi</Authors>
+    <Company>None</Company>
+    <Product>Advertisement API Microservice</Product>
+    <RepositoryUrl>https://github.com/tyagiamit08/Advertisement.AdvertAPI</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/tyagiamit08/Advertisement.AdvertAPI</PackageProjectUrl>
+    <PackageId>AdvertisementAPIModels</PackageId>
   </PropertyGroup>
 
 </Project>
